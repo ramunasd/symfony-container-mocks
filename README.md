@@ -1,5 +1,7 @@
 ﻿# Symfony Container Mocks
 
+[![Build Status](https://travis-ci.org/ramunasd/symfony-container-mocks.svg?branch=master)](https://travis-ci.org/ramunasd/symfony-container-mocks)
+
 This container enables you to mock services in the Symfony dependency
 injection container. It is particularly useful in functional tests.
 
