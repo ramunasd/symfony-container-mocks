@@ -47,7 +47,10 @@ class ContainerMocks extends Container
      */
     public function reset()
     {
-        parent::reset();
+        if (interface_exists('Symfony\Component\DependencyInjection\ResettableContainerInterface')
+            && $this instanceof \Symfony\Component\DependencyInjection\ResettableContainerInterface) {
+            parent::reset();
+        }
         $this->mocked = array();
     }
 
