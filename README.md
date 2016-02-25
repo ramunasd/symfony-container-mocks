@@ -42,7 +42,9 @@ protected function getContainerBaseClass()
 And clear your cache.
 
 
-## Using in Symfony functional tests
+## Features
+
+### Simple mocking
 
 ```php
 <?php
@@ -83,4 +85,17 @@ class AcmeControllerTest extends WebTestCase
         // ...
     }
 }
+```
+
+### Class name autodetection 
+
+This feature works only with flag "debug" enabled.
+ 
+```php
+    
+    $mock = $this->client->getContainer()->prophesize('acme.service.custom');
+    $mock
+        ->myMethod()
+        ->willReturn(true);
+    
 ```

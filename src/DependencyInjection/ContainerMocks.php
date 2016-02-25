@@ -19,13 +19,17 @@ class ContainerMocks extends Container
 
     /**
      * @param string $id The service identifier
-     * @param string $class Class or interface fully qualified name
+     * @param string|null $class Class or interface fully qualified name
      * @return \Prophecy\Prophecy\ObjectProphecy
      */
-    public function prophesize($id, $class)
+    public function prophesize($id, $class = null)
     {
         if (array_key_exists($id, $this->mocked)) {
             throw new \InvalidArgumentException('This service already mocked and can have references');
+        }
+
+        if (empty($class)) {
+            $class = $this->detectClass($id);
         }
 
         $mock = $this->getProphet()->prophesize($class);
@@ -116,5 +120,15 @@ class ContainerMocks extends Container
         }
 
         return $this->prophet;
+    }
+
+    /**
+     * @param string $service
+     * @return string
+     * @throws \BadMethodCallException
+     */
+    protected function detectClass($service)
+    {
+        return DefinitionLoader::getClassName($service, $this);
     }
 }
