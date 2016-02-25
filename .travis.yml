@@ -20,7 +20,7 @@ env:
   - SYMFONY_VERSION=3.0.*
 
 install:
-  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/dependency-injection:${SYMFONY_VERSION}; fi;
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/dependency-injection:${SYMFONY_VERSION} symfony/framework-bundle:${SYMFONY_VERSION} symfony/http-kernel:${SYMFONY_VERSION}; fi;
 
 before_script:
   - composer update --prefer-dist -n --no-progress
