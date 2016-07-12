@@ -18,6 +18,7 @@ env:
   - SYMFONY_VERSION=2.7.*
   - SYMFONY_VERSION=2.8.*
   - SYMFONY_VERSION=3.0.*
+  - SYMFONY_VERSION=3.1.*
 
 install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/dependency-injection:${SYMFONY_VERSION} symfony/framework-bundle:${SYMFONY_VERSION} symfony/http-kernel:${SYMFONY_VERSION}; fi;
