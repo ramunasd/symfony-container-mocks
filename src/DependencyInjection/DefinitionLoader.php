@@ -7,14 +7,14 @@ use Symfony\Component\DependencyInjection\Container;
 class DefinitionLoader
 {
     /** @var array */
-    protected static $definitions;
+    protected static $definitions = [];
 
     /**
      * @param Container $container
      */
     protected static function loadDefinitions(Container $container)
     {
-        if (self::$definitions == null) {
+        if (empty(self::$definitions)) {
             if (!$container->hasParameter('debug.container.dump')) {
                 throw new \BadMethodCallException('Class autodetection works only with "debug" enabled');
             }
@@ -22,7 +22,6 @@ class DefinitionLoader
             $dump = $container->getParameter('debug.container.dump');
             $xml = simplexml_load_file($dump);
 
-            self::$definitions = [];
             foreach ($xml->services->service as $service) {
                 $attributes = $service->attributes();
                 $id = (string)$attributes['id'];
@@ -39,7 +38,7 @@ class DefinitionLoader
      */
     public static function unload()
     {
-        self::$definitions = null;
+        self::$definitions = [];
     }
 
     /**
@@ -60,3 +59,4 @@ class DefinitionLoader
         return self::$definitions[$service];
     }
 }
+
