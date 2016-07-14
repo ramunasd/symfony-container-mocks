@@ -26,20 +26,22 @@ Replace base container class for test environment in `app/AppKernel.php`
 ```php
 <?php
 
+use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
+
 /**
  * @return string
  */
 protected function getContainerBaseClass()
 {
     if ('test' == $this->environment) {
-        return '\RDV\SymfonyContainerMocks\DependencyInjection\ContainerMocks';
+        return TestContainer::class;
     }
     
     return parent::getContainerBaseClass();
 }
 ```
 
-And clear your cache.
+And clear application cache.
 
 
 ## Features
@@ -52,6 +54,7 @@ And clear your cache.
 namespace Acme\Bundle\AcmeBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Acme\Bundle\AcmeBundle\Service\Custom;
 
 class AcmeControllerTest extends WebTestCase
 {
@@ -77,7 +80,7 @@ class AcmeControllerTest extends WebTestCase
 
     public function testSomethingWithMockedService()
     {
-        $this->client->getContainer()->prophesize('acme.service.custom', 'Acme\Bundle\AcmeBundle\Service\Custom')
+        $this->client->getContainer()->prophesize('acme.service.custom', Custom::class)
             ->someMethod([])
             ->willReturn(false)
             ->shouldBeCalledTimes(2);

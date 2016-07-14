@@ -2,12 +2,12 @@
 
 namespace RDV\Tests\SymfonyContainerMocks\DependencyInjection;
 
-use RDV\SymfonyContainerMocks\DependencyInjection\ContainerMocks;
+use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 
-class MockerContainerTest extends \PHPUnit_Framework_TestCase
+class TestContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ContainerMocks $container
+     * @var TestContainer $container
      */
     private $container;
 
@@ -18,7 +18,7 @@ class MockerContainerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->container = new ContainerMocks();
+        $this->container = new TestContainer();
 
         foreach (array('service1', 'service2', 'service3') as $id) {
             $service = new \stdClass();
@@ -113,3 +113,4 @@ class MockerContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->container->initialized($id));
     }
 }
+
