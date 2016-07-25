@@ -12,15 +12,20 @@ injection container. It is particularly useful in functional tests.
 
 ## Installation
 
-Add SymfonyContainerMocks to your composer.json:
+Add SymfonyContainerMocks using composer:
+
+`composer require "ramunasd/symfony-container-mocks"`
+
+or edit your composer.json:
 
 ```js
 {
     "require": {
-        "ramuansd/symfony-container-mocks": "*"
+        "ramunasd/symfony-container-mocks": "*"
     }
 }
 ```
+
 
 Replace base container class for test environment in `app/AppKernel.php`
 
