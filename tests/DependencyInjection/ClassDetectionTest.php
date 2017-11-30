@@ -2,7 +2,7 @@
 
 namespace RDV\Tests\SymfonyContainerMocks\DependencyInjection;
 
-use RDV\SymfonyContainerMocks\DependencyInjection\ContainerMocks;
+use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 use RDV\SymfonyContainerMocks\DependencyInjection\DefinitionLoader;
 use RDV\Tests\SymfonyContainerMocks\Fixtures\TestKernel;
 
@@ -17,7 +17,7 @@ class ClassDetectionTest extends \PHPUnit_Framework_TestCase
     public function testServiceClassIsDetectedCorrectly()
     {
         $kernel = $this->getKernel();
-        /** @var ContainerMocks $container */
+        /** @var TestContainer $container */
         $container = $kernel->getContainer();
         $mock = $container->prophesize('test_service');
         $this->assertInstanceOf('Prophecy\Prophecy\ObjectProphecy', $mock);

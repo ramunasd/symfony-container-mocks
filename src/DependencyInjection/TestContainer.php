@@ -21,6 +21,9 @@ class TestContainer extends Container
      * @param string $id The service identifier
      * @param string|null $class Class or interface fully qualified name
      * @return \Prophecy\Prophecy\ObjectProphecy
+     * @throws \InvalidArgumentException
+     * @throws \BadMethodCallException
+     * @throws \Prophecy\Exception\Prophecy\ObjectProphecyException
      */
     public function prophesize($id, $class = null)
     {
@@ -56,6 +59,15 @@ class TestContainer extends Container
             parent::reset();
         }
         $this->mocked = array();
+    }
+
+    /**
+     * @param string $id
+     * @param mixed $mock
+     */
+    public function setMock($id, $mock)
+    {
+        $this->mocked[$id] = $mock;
     }
 
     /**

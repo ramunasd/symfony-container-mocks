@@ -34,6 +34,30 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
         $this->container->tearDown();
     }
 
+    public function testCustomMockSetClear()
+    {
+        $id = mt_rand();
+        $service = $this->createMock('Symfony\Component\Config\Loader\LoaderInterface');
+        $service
+            ->expects($this->once())
+            ->method('load')
+            ->willReturn(true);
+        $this->container->setMock($id, $service);
+
+        // simulate call on mock
+        $this->assertTrue($this->container->get($id)->load('test'));
+
+        // clear container state
+        $this->container->unMock($id);
+
+        // must fail cause service does not exist
+        try {
+            $this->container->get($id);
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException', $e);
+        }
+    }
+
     public function testBehaviorDoesNotChangeByDefault()
     {
         $this->assertTrue($this->container->has('service1'));
@@ -86,7 +110,7 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
     {
         $id = 'service1';
         $this->container->prophesize($id, 'stdClass');
-        $this->container->unmock($id);
+        $this->container->unMock($id);
 
         $this->assertTrue($this->container->has($id));
         $this->assertEquals($this->services[$id], $this->container->get($id));

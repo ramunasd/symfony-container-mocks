@@ -6,7 +6,7 @@
 This container enables you to mock services in the Symfony dependency
 injection container. It is particularly useful in functional tests.
 
-## Supported mocking frameworks
+## OTB supported mocking frameworks
 
  * phpspec/prophecy
 
@@ -32,18 +32,31 @@ Replace base container class for test environment in `app/AppKernel.php`
 ```php
 <?php
 
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 
-/**
- * @return string
- */
-protected function getContainerBaseClass()
+class AppKernel extends Kernel
 {
-    if ('test' == $this->environment) {
-        return TestContainer::class;
+    public function registerBundles() {
+        // TODO: Implement registerBundles() method.
     }
     
-    return parent::getContainerBaseClass();
+    public function registerContainerConfiguration(LoaderInterface $loader) {
+        // TODO: Implement registerContainerConfiguration() method.
+    }
+    
+    /**
+     * @return string
+     */
+    protected function getContainerBaseClass()
+    {
+        if ('test' === $this->environment) {
+            return TestContainer::class;
+        }
+        
+        return parent::getContainerBaseClass();
+    }
 }
 ```
 
@@ -98,13 +111,25 @@ class AcmeControllerTest extends WebTestCase
 
 ### Class name autodetection 
 
-This feature works only with flag "debug" enabled.
+> feature works only with flag "debug" enabled.
  
 ```php
-    
-    $mock = $this->client->getContainer()->prophesize('acme.service.custom');
-    $mock
-        ->myMethod()
-        ->willReturn(true);
-    
+$mock = $this->client->getContainer()->prophesize('acme.service.custom');
+$mock
+    ->myMethod()
+    ->willReturn(true);
+```
+
+### Custom mocking framework
+
+```php
+// create stub
+$mock = $this->getMock(Custom::class);
+
+// inject service mock
+self::$kernel->getContainer()->setMock('acme.service.custom', $mock);
+
+// reset container state
+self::$kernel->getContainer()->unMock('acme.service.custom');
+
 ```
