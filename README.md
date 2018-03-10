@@ -34,28 +34,22 @@ Replace base container class for test environment in `app/AppKernel.php`
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
+use RDV\SymfonyContainerMocks\DependencyInjection\TestKernelTrait;
 
 class AppKernel extends Kernel
 {
-    public function registerBundles() {
-        // TODO: Implement registerBundles() method.
-    }
+    // use special container when env=test
+    use TestKernelTrait;
     
-    public function registerContainerConfiguration(LoaderInterface $loader) {
-        // TODO: Implement registerContainerConfiguration() method.
-    }
-    
-    /**
-     * @return string
-     */
-    protected function getContainerBaseClass()
+    public function registerBundles()
     {
-        if ('test' === $this->environment) {
-            return TestContainer::class;
-        }
-        
-        return parent::getContainerBaseClass();
+        return [
+            // bundles
+        ];
+    }
+    
+    public function registerContainerConfiguration(LoaderInterface $loader)
+    {
     }
 }
 ```

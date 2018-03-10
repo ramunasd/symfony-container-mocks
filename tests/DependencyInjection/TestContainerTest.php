@@ -6,6 +6,8 @@ use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 
 class TestContainerTest extends \PHPUnit_Framework_TestCase
 {
+    const KERNEL_CLASS = TestContainer::class;
+
     /**
      * @var TestContainer $container
      */
@@ -16,9 +18,10 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
      */
     private $services = array();
 
-    public function setUp()
+    protected function setUp()
     {
-        $this->container = new TestContainer();
+        $class = self::KERNEL_CLASS;
+        $this->container = new $class;
 
         foreach (array('service1', 'service2', 'service3') as $id) {
             $service = new \stdClass();
@@ -29,7 +32,7 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $this->container->tearDown();
     }
