@@ -139,5 +139,11 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
         $this->container->prophesize($id, 'stdClass');
         $this->assertTrue($this->container->initialized($id));
     }
+
+    public function testGetProphecyReturnsSameObjectTwice()
+    {
+        $prophet = $this->container->getProphet();
+        $this->assertSame($prophet, $this->container->getProphet());
+    }
 }
 

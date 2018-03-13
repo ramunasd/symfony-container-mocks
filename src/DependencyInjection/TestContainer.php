@@ -125,7 +125,7 @@ class TestContainer extends Container
     /**
      * @return Prophet
      */
-    protected function getProphet()
+    public function getProphet()
     {
         if (!$this->prophet) {
             $this->prophet = new Prophet();
