@@ -10,7 +10,17 @@ class TestContainer extends Container
     /**
      * @var array
      */
-    protected $mocked = array();
+    private $mocked = [];
+
+    /**
+     * @var array|null
+     */
+    private $parametersOriginal;
+
+    /**
+     * @var \ReflectionProperty
+     */
+    private $parametersReflection;
 
     /**
      * @var Prophet
@@ -18,7 +28,7 @@ class TestContainer extends Container
     protected $prophet;
 
     /**
-     * @param string $id The service identifier
+     * @param string      $id The service identifier
      * @param string|null $class Class or interface fully qualified name
      * @return \Prophecy\Prophecy\ObjectProphecy
      * @throws \InvalidArgumentException
@@ -46,7 +56,8 @@ class TestContainer extends Container
      */
     public function tearDown()
     {
-        $this->mocked = array();
+        $this->mocked = [];
+        $this->clearMockedParameters();
     }
 
     /**
@@ -58,12 +69,12 @@ class TestContainer extends Container
             && $this instanceof \Symfony\Component\DependencyInjection\ResettableContainerInterface) {
             parent::reset();
         }
-        $this->mocked = array();
+        $this->tearDown();
     }
 
     /**
      * @param string $id
-     * @param mixed $mock
+     * @param mixed  $mock
      */
     public function setMock($id, $mock)
     {
@@ -142,6 +153,48 @@ class TestContainer extends Container
     protected function detectClass($service)
     {
         return DefinitionLoader::getClassName($service, $this);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     * @throws \ReflectionException
+     */
+    public function setMockedParameter($name, $value)
+    {
+        $reflection = $this->getParametersReflection();
+        $parameters = $reflection->getValue($this);
+        if (!$this->parametersOriginal) {
+            $this->parametersOriginal = $parameters;
+        }
+        $parameters[$name] = $value;
+        $reflection->setValue($this, $parameters);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function clearMockedParameters()
+    {
+        if ($this->parametersOriginal) {
+            $reflection = $this->getParametersReflection();
+            $reflection->setValue($this, $this->parametersOriginal);
+            $this->parametersOriginal = null;
+        }
+    }
+
+    /**
+     * @return \ReflectionProperty
+     * @throws \ReflectionException
+     */
+    private function getParametersReflection()
+    {
+        if (!$this->parametersReflection) {
+            $this->parametersReflection = new \ReflectionProperty($this, 'parameters');
+            $this->parametersReflection->setAccessible(true);
+        }
+
+        return $this->parametersReflection;
     }
 }
 

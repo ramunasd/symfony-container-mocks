@@ -30,8 +30,8 @@ class TestKernel extends KernelForTest
 
     protected function getContainerBaseClass()
     {
-        if ('test' == $this->environment) {
-            return '\RDV\SymfonyContainerMocks\DependencyInjection\ContainerMocks';
+        if ('test' === $this->environment) {
+            return '\RDV\SymfonyContainerMocks\DependencyInjection\TestContainer';
         }
 
         return parent::getContainerBaseClass();

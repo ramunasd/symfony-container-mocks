@@ -3,10 +3,11 @@
 namespace RDV\Tests\SymfonyContainerMocks\DependencyInjection;
 
 use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
+use RDV\Tests\SymfonyContainerMocks\Fixtures\TestKernel;
 
 class TestContainerTest extends \PHPUnit_Framework_TestCase
 {
-    const KERNEL_CLASS = TestContainer::class;
+    const CONTAINER_CLASS = TestContainer::class;
 
     /**
      * @var TestContainer $container
@@ -20,7 +21,7 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $class = self::KERNEL_CLASS;
+        $class = self::CONTAINER_CLASS;
         $this->container = new $class;
 
         foreach (array('service1', 'service2', 'service3') as $id) {
@@ -144,6 +145,23 @@ class TestContainerTest extends \PHPUnit_Framework_TestCase
     {
         $prophet = $this->container->getProphet();
         $this->assertSame($prophet, $this->container->getProphet());
+    }
+
+    public function testContainerParametersCanBeMocked()
+    {
+        $kernel = new TestKernel('test', false);
+        $kernel->boot();
+        $container = $kernel->getContainer();
+
+        $param = 'test_parameter1';
+        $original = 'original_value';
+        $this->assertEquals($original, $container->getParameter($param));
+
+        $container->setMockedParameter($param, $mocked = 'mocked_value');
+        $this->assertEquals($mocked, $container->getParameter($param));
+
+        $container->clearMockedParameters();
+        $this->assertEquals($original, $container->getParameter($param));
     }
 }
 

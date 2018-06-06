@@ -8,5 +8,5 @@ include __DIR__ . '/TestContainerTest.php';
 
 class KernelTraitTest extends TestContainerTest
 {
-    const KERNEL_CLASS = TestKernelTrait::class;
+    const CONTAINER_CLASS = TestKernelTrait::class;
 }

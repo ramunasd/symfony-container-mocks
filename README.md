@@ -6,6 +6,15 @@
 This container enables you to mock services in the Symfony dependency
 injection container. It is particularly useful in functional tests.
 
+## Features
+
+* Mock any Symfony service
+* Service class auto-detection
+* Support for custom mocking frameworks
+* Ability to mock framework parameters
+* Support Symfony versions 2.7 - 3.4
+* Works with all supported PHP versions
+
 ## OTB supported mocking frameworks
 
  * phpspec/prophecy
@@ -74,7 +83,7 @@ class AcmeControllerTest extends WebTestCase
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client $client
      */
-    private $client = null;
+    private $client;
 
     public function setUp()
     {
@@ -127,3 +136,27 @@ self::$kernel->getContainer()->setMock('acme.service.custom', $mock);
 self::$kernel->getContainer()->unMock('acme.service.custom');
 
 ```
+
+### Set specific framework parameter
+
+```php
+// set custom value during test
+self::$kernel->getContainer()->setMockedParameter('acme.service.parameter1', 'customValue1');
+
+// trigger service, assert results
+
+// reset all parameters to original values
+self::$kernel->getContainer()->clearMockedParameters();
+```
+
+
+## Things TO DO
+
+* Symfony 4.x support
+* PSR-11 adoption
+
+
+## Similar/Related projects
+
+* https://github.com/jakzal/phpunit-injector - inject Symfony services into PHPUnit test cases
+
