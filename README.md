@@ -8,16 +8,15 @@ injection container. It is particularly useful in functional tests.
 
 ## Features
 
-* Mock any Symfony service
-* Service class auto-detection
-* Support for custom mocking frameworks
-* Ability to mock framework parameters
-* Support Symfony versions 2.7 - 3.4
-* Works with all supported PHP versions
+* Can replace any Symfony service or parameter
+* Automatically detects service class from service definition
+* Can be used with any mocking framework
+* Compatible with Symfony versions 2.7 - 3.4
+* Works on all supported version of PHP
 
 ## OTB supported mocking frameworks
 
- * phpspec/prophecy
+ * [phpspec/prophecy](https://github.com/phpspec/prophecy)
 
 ## Installation
 
@@ -66,9 +65,9 @@ class AppKernel extends Kernel
 And clear application cache.
 
 
-## Features
+## Examples
 
-### Simple mocking
+### Inject mocked service
 
 ```php
 <?php
@@ -112,7 +111,7 @@ class AcmeControllerTest extends WebTestCase
 }
 ```
 
-### Class name autodetection 
+### Inject automatically mocked service
 
 > feature works only with flag "debug" enabled.
  
@@ -123,7 +122,7 @@ $mock
     ->willReturn(true);
 ```
 
-### Custom mocking framework
+### Other mocking frameworks
 
 ```php
 // create stub
