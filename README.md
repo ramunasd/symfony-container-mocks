@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ramunasd/symfony-container-mocks.svg?branch=master)](https://travis-ci.org/ramunasd/symfony-container-mocks)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ramunasd/symfony-container-mocks/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ramunasd/symfony-container-mocks/?branch=master)
+[![PHP-Eye](https://php-eye.com/badge/ramunasd/symfony-container-mocks/tested.svg?style=flat)](https://php-eye.com/package/ramunasd/symfony-container-mocks)
+
 
 This container enables you to mock services in the Symfony dependency
 injection container. It is particularly useful in functional tests.
