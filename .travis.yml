@@ -14,7 +14,6 @@ php:
   - nightly
 
 env:
-  - SYMFONY_VERSION=2.3.*
   - SYMFONY_VERSION=2.7.*
   - SYMFONY_VERSION=2.8.*
   - SYMFONY_VERSION=3.0.*
