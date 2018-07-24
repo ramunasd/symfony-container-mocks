@@ -20,7 +20,8 @@
     "symfony/http-kernel": ">=2.3",
     "symfony/config": ">=2.3",
     "symfony/framework-bundle": ">=2.3",
-    "phpunit/phpunit": "^5.7"
+    "phpunit/phpunit": "^5.7",
+    "php-coveralls/php-coveralls": "^2.1"
   },
   "autoload": {
     "psr-4": {

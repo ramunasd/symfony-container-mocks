@@ -28,6 +28,6 @@ install:
 before_script:
   - composer update --prefer-dist --prefer-stable --no-ansi -n --no-progress
 
-script:
-  - ./vendor/bin/phpunit --coverage-text
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v
 
